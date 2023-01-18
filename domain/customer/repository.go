@@ -12,7 +12,9 @@ var (
 	ErrUpdateCustomer      = errors.New("error when updating the customer")
 )
 
-type CustomerRepository interface {
+// Repository is the contract to create repositories
+// for customer aggregate
+type Repository interface {
 	Get(uuid uuid.UUID) (*aggregate.Customer, error)
 	Add(customer *aggregate.Customer) error
 	Update(customer *aggregate.Customer) error

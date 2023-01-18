@@ -66,7 +66,7 @@ func (mpr *MemoryProductRepository) Update(upprod *aggregate.Product) error {
 	return nil
 }
 
-// Delete remove an product from the repository
+// Delete remove a product from the repository
 func (mpr *MemoryProductRepository) Delete(id uuid.UUID) error {
 	mpr.Lock()
 	defer mpr.Unlock()

@@ -9,7 +9,7 @@ import (
 type OrderConfiguration func(os *OrderService) error
 
 type OrderService struct {
-	customers customer.CustomerRepository
+	customers customer.Repository
 }
 
 func NewOrderService(cfgs ...OrderConfiguration) (*OrderService, error) {
@@ -31,7 +31,7 @@ func (o *OrderService) CreateOrder(customerID uuid.UUID, productIDs []uuid.UUID)
 	return nil
 }
 
-func WithCustomerRepository(cr customer.CustomerRepository) OrderConfiguration {
+func WithCustomerRepository(cr customer.Repository) OrderConfiguration {
 	return func(os *OrderService) error {
 		os.customers = cr
 		return nil

@@ -8,20 +8,20 @@ import (
 	"sync"
 )
 
-type MemoryRepository struct {
+type CustomerRepository struct {
 	customers map[uuid.UUID]*aggregate.Customer
 	sync.Mutex
 }
 
 // New is a factory function to generate a new repository of customers
-func New() *MemoryRepository {
-	return &MemoryRepository{
+func New() customer.Repository {
+	return &CustomerRepository{
 		customers: make(map[uuid.UUID]*aggregate.Customer),
 	}
 }
 
 // Get finds a customer by ID
-func (mr *MemoryRepository) Get(uid uuid.UUID) (*aggregate.Customer, error) {
+func (mr *CustomerRepository) Get(uid uuid.UUID) (*aggregate.Customer, error) {
 	v, ok := mr.customers[uid]
 	if !ok {
 		return nil, customer.ErrCustomerNotFound
@@ -30,7 +30,7 @@ func (mr *MemoryRepository) Get(uid uuid.UUID) (*aggregate.Customer, error) {
 }
 
 // Add will add a new customer to the repository
-func (mr *MemoryRepository) Add(c *aggregate.Customer) error {
+func (mr *CustomerRepository) Add(c *aggregate.Customer) error {
 	if mr.customers == nil {
 		mr.Lock()
 		mr.customers = make(map[uuid.UUID]*aggregate.Customer)
@@ -46,7 +46,7 @@ func (mr *MemoryRepository) Add(c *aggregate.Customer) error {
 }
 
 // Update will replace an existing customer information with the new customer information
-func (mr *MemoryRepository) Update(c *aggregate.Customer) error {
+func (mr *CustomerRepository) Update(c *aggregate.Customer) error {
 	if _, ok := mr.customers[c.GetID()]; !ok {
 		return customer.ErrCustomerNotFound
 	}

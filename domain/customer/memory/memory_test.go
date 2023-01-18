@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestMemoryRepository_Get(t *testing.T) {
+func TestCustomerRepository_Get(t *testing.T) {
 	type testCase struct {
 		name        string
 		id          uuid.UUID
@@ -18,7 +18,7 @@ func TestMemoryRepository_Get(t *testing.T) {
 		t.Fatal(err)
 	}
 	id := c.GetID()
-	repo := MemoryRepository{
+	repo := CustomerRepository{
 		customers: map[uuid.UUID]*aggregate.Customer{
 			id: &c,
 		},
@@ -63,7 +63,7 @@ func TestMemory_AddCustomer(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			repo := MemoryRepository{
+			repo := CustomerRepository{
 				customers: map[uuid.UUID]*aggregate.Customer{},
 			}
 
